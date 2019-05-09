@@ -1,0 +1,15 @@
+syntax = "proto2";
+
+package reg_is;
+
+
+message MethodResult {
+  
+  optional string method_name = 1;
+  repeated float estimates = 2;
+  repeated float mse = 3;
+  repeated float num_samples = 4;
+  optional float true_value = 5;
+
+}
+

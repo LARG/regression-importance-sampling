@@ -1,0 +1,5 @@
+*.pb.h
+*.pb.cc
+*.o
+main
+*.pyc

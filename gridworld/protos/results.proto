@@ -1,0 +1,54 @@
+syntax = "proto2";
+
+package policy_gradient;
+
+message MethodResult {
+
+  required string method_name = 1;
+  repeated float dataset_sizes = 2;
+  repeated float estimates = 3;
+  repeated float variances = 4;
+  repeated float mses = 5;
+}
+
+message MethodSingleEval {
+  
+  optional string method_name = 1;
+  optional float estimate = 2;
+  optional float variance = 3;
+  optional float mse = 4;
+
+}
+
+message PolicyResult {
+    
+    optional string label = 1;
+    repeated MethodResult methods = 2;
+    optional float true_value = 3;
+    repeated MethodSingleEval single_evals = 4;
+    optional int32 policy_number = 5;
+
+}
+
+message Results {
+
+  // Comparison of methods for different policies.
+  repeated PolicyResult policy_results = 1;
+
+  // optimization_result is for comparison of methods during
+  // behavior policy search.
+  optional PolicyResult optimization_result = 2;
+
+
+}
+
+
+message ImprovementResults {
+  
+  repeated float dataset_sizes = 1;
+  repeated float avg_return = 2;
+  repeated float estimated_avg_return = 3;
+  repeated float mse = 4;
+  optional string label = 5;
+
+}

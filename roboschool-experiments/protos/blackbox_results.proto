@@ -1,0 +1,118 @@
+syntax = "proto2";
+
+package blackbox;
+
+message BlackBoxResults {
+
+  required string tag = 1;
+  
+  repeated float obj_values = 2;
+  repeated float constraint_values = 3;
+  repeated float blackbox_estimates = 4;
+  repeated float blackbox_mse = 5;
+  repeated float mean_sampling = 6;
+  repeated float is_estimates = 7;
+  repeated float is_mse = 8;
+  repeated float monte_carlo_estimates = 9;
+  repeated float monte_carlo_mse = 10;
+  repeated float wis_estimates = 11;
+  repeated float wis_mse = 12;
+  repeated int32 num_samples = 13;
+  repeated float mle_is_estimates = 14;
+  repeated float mle_is_mse = 15;
+  repeated float mle_wis_estimates = 16;
+  repeated float mle_wis_mse = 17;
+  repeated float constrained_obj_values = 18;
+  repeated float constrained_constraint_values = 19;
+  repeated float constrained_blackbox_estimates = 20;
+  repeated float constrained_blackbox_mse = 21;
+
+}
+
+message Results {
+  
+  required string experiment_name = 1;
+  repeated MethodResult methods = 2;
+
+}
+
+message MethodResult {
+  
+  required string method_name = 1;
+  repeated float estimates = 2;
+  repeated float mse = 3;
+  repeated float variances = 4;
+  repeated float num_samples = 5;
+  optional BlackBoxInfo blackboxinfo= 6;
+  optional float true_value = 7;
+  repeated float hold_out_likelihood = 8;
+  repeated float train_likelihood = 9;
+
+}
+
+message BlackBoxInfo {
+  
+  repeated float obj_values = 1;
+  repeated float constraint_values = 2;
+
+}
+
+message FitResults {
+  
+  required string method_name = 1;
+  repeated float estimates = 2;
+  repeated float mse = 3;
+  repeated float variance = 4;
+  repeated float losses = 5;
+  repeated float validation_loss = 6;
+  repeated int32 iterations = 7;
+  optional float density_estimate = 8;
+  optional float density_variance = 9;
+  optional float density_mse = 10;
+  optional float true_value = 11;
+  repeated float entropy = 12;
+  repeated float in_sample_validation = 13;
+  optional float density_weighted_estimate = 14;
+  optional float density_weighted_variance = 15;
+  optional float density_weighted_mse = 16;
+  repeated float weighted_estimates = 17;
+  repeated float weighted_mse = 18;
+  repeated float weighted_variance = 19;
+  optional float mle_estimate = 20;
+  optional float mle_variance = 21;
+  optional float mle_mse = 22;
+  optional float mle_weighted_estimate = 23;
+  optional float mle_weighted_variance = 24;
+  optional float mle_weighted_mse = 25;
+  optional float mle_loss = 26;
+  optional float mle_validation_loss = 27;
+  optional float true_loss = 28;
+  optional float true_validation_loss = 29;
+}
+
+message PolicyData {
+  // This message contains extra information for creating 
+  // a policy. This includes info on the policy architecture and also
+  // the ground truth evaluation of the policies' performance so we don't
+  // need to recompute this for every experiment
+  required string restore_path = 1;
+  optional bool filter_obs = 2;
+  optional int32 hidden_layers = 3;
+  optional int32 hidden_units = 4;
+  optional string act_fn = 5;
+  optional float average_return = 6;
+  optional float average_variance = 7;
+  optional float average_path_length = 8;
+}
+
+message ResultCache {
+  repeated MethodCache results = 1;
+}
+
+message MethodCache {
+  optional string name = 1;
+  repeated float mean = 2;
+  repeated float err = 3;
+  repeated int32 n = 4;
+  repeated string labels = 5;
+}
